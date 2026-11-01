@@ -1,0 +1,23 @@
+# =====================================================================
+# LMS - Logistics Management System
+# Flask (web framework) + PyMySQL (MySQL driver).
+# Everything else (random, datetime, functools) is Python standard library.
+# =====================================================================
+#
+# Install:      pip install -r requirements.txt
+# Run:          python app.py   ->  http://127.0.0.1:5000
+#
+# A running MySQL 8 server is required. Connection settings (host, user,
+# password, database 'GG') live in DB_CONFIG at the top of app.py.
+# The database and its tables are created automatically on first start.
+
+Flask>=3.0,<4.0
+PyMySQL>=1.1
+
+# ---------------------------------------------------------------
+# Exact versions used while building and testing this project
+# (uncomment these instead if you need a fully reproducible install):
+# ---------------------------------------------------------------
+# Flask==3.1.2
+# PyMySQL==2.2.8
+# Werkzeug==3.1.3

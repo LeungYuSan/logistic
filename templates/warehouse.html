@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Warehouse - LMS{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <h1>Warehouse operations</h1>
+  <p>Log parcels in at the shelf, dispatch them to drivers, and assign delivery tasks.</p>
+</div>
+
+<!-- ============ status overview cards (filled by JS) ============ -->
+<div class="grid stats" id="wh-stats" style="margin-bottom:18px;"></div>
+
+<!-- ============ filter bar ============ -->
+<div class="card">
+  <div class="inline-form">
+    <label for="status-filter" style="margin:0;">Filter by status</label>
+    <select id="status-filter">
+      <option value="">All shipments</option>
+      {% for s in statuses %}
+        <option value="{{ s }}">{{ s }}</option>
+      {% endfor %}
+    </select>
+    <input id="search" placeholder="Search tracking no. / receiver" style="min-width:230px;">
+  </div>
+</div>
+
+<!-- ============ all shipments ============ -->
+<div class="card">
+  <h2>All shipments</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Tracking no.</th><th>Customer</th><th>Receiver</th><th>Weight</th>
+          <th>Status</th><th>Shelf</th><th>Driver</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="wh-body">
+        <tr><td colspan="8" class="empty">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============ driver list ============ -->
+<div class="card">
+  <h2>Available drivers</h2>
+  <div id="driver-list" class="muted">Loading…</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/warehouse.js') }}"></script>
+{% endblock %}

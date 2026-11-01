@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Log in - LMS{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+  <div class="brand">📦 LMS</div>
+  <p class="sub">Logistics Management System</p>
+
+  <div class="card">
+    <h2>Log in</h2>
+
+    <!-- Plain HTML form -> POST /login (handled by login_page() in app.py) -->
+    <form method="POST" action="{{ url_for('login_page') }}">
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" name="email" value="{{ email }}" required autofocus
+               placeholder="you@example.com">
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" required placeholder="••••••••">
+      </div>
+
+      <button class="btn-block" type="submit">Log in</button>
+    </form>
+
+    <p class="auth-foot">
+      No account yet? <a href="{{ url_for('register_page') }}">Register as a customer</a>
+    </p>
+
+    <!-- Demo credentials so you can try every role immediately -->
+    <div class="demo-box">
+      <strong>Demo accounts</strong><br>
+      Admin <code>admin@lms.com / admin123</code><br>
+      Warehouse <code>warehouse@lms.com / warehouse123</code><br>
+      Driver <code>driver@lms.com / driver123</code><br>
+      Customer <code>customer@lms.com / customer123</code>
+    </div>
+  </div>
+</div>
+{% endblock %}

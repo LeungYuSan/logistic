@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Admin - LMS{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <h1>Administration</h1>
+  <p>System statistics and user account management.</p>
+</div>
+
+<!-- ============ statistics cards + per-status bars (filled by JS) ============ -->
+<div class="grid stats" id="admin-stats" style="margin-bottom:18px;"></div>
+
+<div class="grid two">
+  <!-- ============ create / manage users ============ -->
+  <div class="card">
+    <h2>Create a user <small>any role</small></h2>
+    <form id="user-form">
+      <div class="field">
+        <label for="u-name">Name</label>
+        <input id="u-name" name="name" required placeholder="Full name">
+      </div>
+      <div class="field">
+        <label for="u-email">Email</label>
+        <input id="u-email" name="email" type="email" required placeholder="user@example.com">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="u-password">Password</label>
+          <input id="u-password" name="password" type="text" required minlength="6" value="password123">
+        </div>
+        <div class="field">
+          <label for="u-role">Role</label>
+          <select id="u-role" name="role">
+            {% for r in roles %}
+              <option value="{{ r }}">{{ r }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <button type="submit">Create account</button>
+    </form>
+  </div>
+
+  <!-- ============ shipments per status ============ -->
+  <div class="card">
+    <h2>Shipments per status</h2>
+    <div id="status-breakdown" class="muted">Loading…</div>
+  </div>
+</div>
+
+<!-- ============ user table ============ -->
+<div class="card">
+  <h2>User accounts</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Created</th><th>Actions</th></tr>
+      </thead>
+      <tbody id="users-body">
+        <tr><td colspan="6" class="empty">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}

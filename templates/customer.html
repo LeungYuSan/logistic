@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Customer dashboard - LMS{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <h1>My orders</h1>
+  <p>Create a new shipment and follow it from pickup to delivery.</p>
+</div>
+
+<div class="grid two">
+  <!-- ============ LEFT: new order form ============ -->
+  <div class="card">
+    <h2>Create a shipment <small>a tracking number is generated automatically</small></h2>
+
+    <!-- This form is submitted with JavaScript (static/js/customer.js -> createOrder) -->
+    <form id="order-form">
+      <div class="field-row">
+        <div class="field">
+          <label for="sender_name">Sender name</label>
+          <input id="sender_name" name="sender_name" required value="{{ me.name }}">
+        </div>
+        <div class="field">
+          <label for="sender_address">Pickup address</label>
+          <input id="sender_address" name="sender_address" required placeholder="Street, city">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="receiver_name">Receiver name</label>
+          <input id="receiver_name" name="receiver_name" required placeholder="Full name">
+        </div>
+        <div class="field">
+          <label for="receiver_phone">Receiver phone</label>
+          <input id="receiver_phone" name="receiver_phone" required placeholder="+60 12-345 6789">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="receiver_address">Delivery address</label>
+        <input id="receiver_address" name="receiver_address" required placeholder="Street, city, postcode">
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="weight_kg">Weight (kg)</label>
+          <input id="weight_kg" name="weight_kg" type="number" step="0.1" min="0.1" value="1" required>
+        </div>
+        <div class="field">
+          <label for="description">Parcel contents</label>
+          <input id="description" name="description" placeholder="e.g. Books, clothes">
+        </div>
+      </div>
+
+      <button type="submit">Place order</button>
+      <span id="order-feedback" class="hint"></span>
+    </form>
+  </div>
+
+  <!-- ============ RIGHT: quick tracking ============ -->
+  <div class="card">
+    <h2>Track a parcel</h2>
+    <p class="hint">Enter a tracking number to see its full journey.</p>
+    <form onsubmit="event.preventDefault(); window.location='/track/' + this.track.value.trim();">
+      <div class="field">
+        <label for="track">Tracking number</label>
+        <input id="track" name="track" placeholder="LMS2510311234">
+      </div>
+      <button class="btn-outline" type="submit">Open tracking page</button>
+    </form>
+
+    <div class="spacer"></div>
+    <h2>How it works</h2>
+    <ol class="muted" style="padding-left:18px; margin:0; font-size:13.5px;">
+      <li>You place an order → status <strong>Pending</strong></li>
+      <li>Warehouse logs the parcel in and assigns a shelf → <strong>Warehouse Received</strong></li>
+      <li>The parcel is loaded onto a truck → <strong>In Transit</strong></li>
+      <li>The rider is on the way → <strong>Out for Delivery</strong></li>
+      <li>Handed over → <strong>Delivered</strong></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============ order history table ============ -->
+<div class="card">
+  <h2>Order history</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Tracking no.</th><th>Receiver</th><th>Status</th><th>Shelf</th>
+          <th>Driver</th><th>Created</th><th>Actions</th>
+        </tr>
+      </thead>
+      <!-- rows are inserted by static/js/customer.js -->
+      <tbody id="orders-body">
+        <tr><td colspan="7" class="empty">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/customer.js') }}"></script>
+{% endblock %}

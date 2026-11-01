@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Driver tasks - LMS{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <h1>My delivery tasks</h1>
+  <p>Only shipments assigned to you are shown here. Update the status as you go.</p>
+</div>
+
+<div class="grid stats" id="drv-stats" style="margin-bottom:18px;"></div>
+
+<div class="card">
+  <h2>Assigned shipments</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Tracking no.</th><th>Receiver</th><th>Phone</th><th>Address</th>
+          <th>Status</th><th>Update</th>
+        </tr>
+      </thead>
+      <tbody id="drv-body">
+        <tr><td colspan="6" class="empty">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/driver.js') }}"></script>
+{% endblock %}

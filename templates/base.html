@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+  base.html = the shared "skeleton" of every page.
+  Child templates fill the "content" block area and can add their own
+  JavaScript with the "scripts" block.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}LMS - Logistics Management System{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <!-- ================= top navigation bar ================= -->
+  <header class="navbar">
+    <div class="brand">📦 <span>LMS</span> Logistics</div>
+
+    <nav class="nav-links">
+      {% if me %}
+        <!-- Links are shown/hidden depending on the logged-in role (RBAC in the UI) -->
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+
+        {% if me.role == 'customer' %}
+          <a href="/track">Track a parcel</a>
+        {% endif %}
+
+        <span class="user-chip">
+          {{ me.name }} <span class="role">/ {{ me.role }}</span>
+        </span>
+        <a href="{{ url_for('logout') }}">Log out</a>
+      {% else %}
+        <a href="{{ url_for('track_page') }}">Track a parcel</a>
+        <a href="{{ url_for('login_page') }}">Log in</a>
+        <a class="btn btn-sm" href="{{ url_for('register_page') }}">Sign up</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <!-- flash messages are sent by the backend with flash(...) -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- small pop-up messages created by JavaScript (js/common.js -> toast()) -->
+  <div id="toast-box"></div>
+
+  <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

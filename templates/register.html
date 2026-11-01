@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Register - LMS{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+  <div class="brand">📦 LMS</div>
+  <p class="sub">Create your customer account</p>
+
+  <div class="card">
+    <h2>Register</h2>
+
+    <!-- POST /register -> handled by register_page() in app.py -->
+    <form method="POST" action="{{ url_for('register_page') }}">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input id="name" type="text" name="name" value="{{ name }}" required autofocus
+               placeholder="Jane Doe">
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" name="email" value="{{ email }}" required
+               placeholder="you@example.com">
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" required minlength="6"
+               placeholder="At least 6 characters">
+        <div class="hint">Minimum 6 characters.</div>
+      </div>
+
+      <button class="btn-block" type="submit">Create account</button>
+    </form>
+
+    <p class="auth-foot">
+      Already registered? <a href="{{ url_for('login_page') }}">Log in</a>
+    </p>
+    <p class="hint">
+      Note: public sign-ups always get the <strong>customer</strong> role. Staff, driver and
+      admin accounts are created by an administrator.
+    </p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Track parcel - LMS{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <h1>Track your parcel</h1>
+  <p>Enter the tracking number you received when the order was created.</p>
+</div>
+
+<div class="card">
+  <!-- Submitted with JavaScript so the result appears without reloading the page -->
+  <form id="track-form">
+    <div class="inline-form">
+      <input id="tracking-input" class="mono" style="flex:1; min-width:220px;"
+             placeholder="e.g. LMS2510311234" value="{{ tracking_number }}" required>
+      <button type="submit">Track</button>
+    </div>
+  </form>
+</div>
+
+<!-- result area: safe (escaped) HTML is inserted here by static/js/track.js -->
+<div id="track-result" class="track-result"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/track.js') }}"></script>
+{% endblock %}
